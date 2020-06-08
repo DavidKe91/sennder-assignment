@@ -1,19 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <Tabs testProp="Tabs test" />
+    <ModalBody v-if="this.stepOneCompleted && this.stepTwoCompleted" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Tabs from "./components/Tabs.vue";
+import ModalBody from "./components/Modal/ModalBody";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Tabs,
+    ModalBody
+  },
+  computed: {
+    ...mapGetters(["stepOneCompleted", "stepTwoCompleted"])
   }
-}
+};
 </script>
 
 <style>
