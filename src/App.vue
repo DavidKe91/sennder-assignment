@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <Tabs testProp="Tabs test" />
+    <Tabs />
     <ModalBody v-if="this.stepOneCompleted && this.stepTwoCompleted" />
   </div>
 </template>

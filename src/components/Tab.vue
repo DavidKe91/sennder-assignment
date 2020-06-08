@@ -5,29 +5,30 @@
         <li v-bind:key="error" v-for="error in errors">{{error}}</li>
       </ul>
     </div>
-    <div v-show="currentTab === 0">
+    <div>
       <h2>{{this.type}}</h2>
-      <span class="input-euro-symbol">
-        <input
-          id="employerMax"
-          type="text"
-          v-model="employerMax"
-          placeholder="Please Enter Maximum Salary"
-        />
-      </span>
-      <button v-on:click="checkForm(employerMax)">Submit</button>
-    </div>
-    <div v-show="currentTab === 1">
-      <h2>{{this.type}}</h2>
-      <span class="input-euro-symbol">
-        <input
-          id="employeeMax"
-          type="text"
-          v-model="employeeMin"
-          placeholder="Please Enter Minimum Salary"
-        />
-      </span>
-      <button v-on:click="checkForm(employeeMin)">Submit</button>
+      <div v-if="currentTab == 0">
+        <span class="input-euro-symbol">
+          <input
+            id="employerMaxID"
+            type="text"
+            v-model="employerMax"
+            placeholder="Please Enter Maximum Salary"
+          />
+        </span>
+        <button v-on:click="checkForm(employerMax)">Submit</button>
+      </div>
+      <div v-else>
+        <span class="input-euro-symbol">
+          <input
+            id="employeeMinID"
+            type="text"
+            v-model="employeeMin"
+            placeholder="Please Enter Minimum Salary"
+          />
+        </span>
+        <button v-on:click="checkForm(employeeMin)">Submit</button>
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +42,14 @@
 }
 button {
   display: block;
-  margin: 10px auto;
+  margin: 20px auto;
+  background-color: #41b883;
+  -webkit-appearance: none;
+  border: none;
+  font-size: 16px;
+  min-width: 220px;
+  color: #ffffff;
+  padding: 10px 15px;
 }
 .input-euro-symbol {
   position: relative;
@@ -49,18 +57,23 @@ button {
 .input-euro-symbol input {
   padding-left: 15px;
   min-width: 200px;
+  padding: 5px 10px 5px 25px;
+  box-shadow: none;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
 }
 .input-euro-symbol:before {
   content: "€";
   position: absolute;
-  left: 5px;
+  left: 8px;
+  color: #41b883;
   top: 1px;
 }
 .errors {
   background-color: hsla(0, 87%, 54%, 0.7);
+  margin: 30px auto 0px;
   color: #ffffff;
   max-width: 200px;
-  margin: 0px auto;
   text-align: center;
   padding: 5px 10px;
   list-style: none;
@@ -86,7 +99,7 @@ export default {
         return this.$store.state.employerMax;
       },
       set(value) {
-        this.$store.commit("updateEmployerMax", parseInt(value));
+        this.checkNumbers(value, "updateEmployerMax");
       }
     },
     employeeMin: {
@@ -94,25 +107,24 @@ export default {
         return this.$store.state.employeeMin;
       },
       set(value) {
-        this.$store.commit("updateEmployeeMin", value);
-      }
-    },
-    toggleClass: {
-      get() {
-        return this.$store.state.isActive;
+        this.checkNumbers(value, "updateEmployeeMin");
       }
     }
   },
   methods: {
-    checkForm: function(inputValue) {
-      if (!inputValue) {
-        this.errors.push("Input required");
-        return false;
-      }
+    checkNumbers: function(inputValue, mutation) {
       let matchNum = /^\d+$/.test(inputValue);
       if (!matchNum) {
         this.errors.pop();
         this.errors.push("Please use positive whole numbers only");
+        return false;
+      } else {
+        this.$store.commit(mutation, inputValue);
+      }
+    },
+    checkForm: function(inputValue) {
+      if (!inputValue) {
+        this.errors.push("Input required");
         return false;
       }
       if (this.currentTab == 0) {
@@ -120,13 +132,12 @@ export default {
         this.$store.commit("changeTab", 1);
         this.errors = [];
         this.$store.state.stepOneCompleted = true;
-        console.log("Step One: " + this.$store.state.stepOneCompleted);
         return true;
       } else {
         inputValue == this.employeeMin;
         this.errors = [];
+        this.$store.commit("changeTab", 0);
         this.$store.state.stepTwoCompleted = true;
-        console.log("Step Two: " + this.$store.state.stepTwoCompleted);
         return true;
       }
     }

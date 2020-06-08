@@ -11,7 +11,8 @@
       </li>
     </ul>
     <div class="tab-content">
-      <Tab type="Employer Maximum" />
+      <Tab v-show="currentTab === 0" type="Employer Maximum" selector="employerMax" />
+      <Tab v-show="currentTab === 1" type="Employee Minimum" selector="employerMax" />
     </div>
   </div>
 </template>

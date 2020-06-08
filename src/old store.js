@@ -33,7 +33,6 @@ const store = new Vuex.Store({
         resetState(state) {
             state.employeeMin = null;
             state.employerMax = null
-            state.isActive = null;
             state.currentTab = 0;
             state.stepOneCompleted = false;
             state.stepTwoCompleted = false;

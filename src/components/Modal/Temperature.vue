@@ -35,7 +35,10 @@ export default {
     }
   },
   filters: {
-    decimalTemperature(value) {
+    decimalTemperature: value => {
+      if (!value) {
+        return "";
+      }
       return value.toFixed(1);
     }
   }
