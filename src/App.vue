@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <img class="vue-logo" alt="Vue logo" src="./assets/logo.png" />
     <Tabs />
+    <!-- Render modal if steps one and two are completed-->
     <ModalBody v-if="this.stepOneCompleted && this.stepTwoCompleted" />
   </div>
 </template>
@@ -31,5 +32,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+@media only screen and (max-width: 767px) {
+  .vue-logo {
+    display: none;
+  }
 }
 </style>

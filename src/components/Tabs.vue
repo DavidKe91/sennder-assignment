@@ -1,6 +1,7 @@
 <template>
   <div class="tabs">
     <ul class="parent-tab">
+      <!-- Outputs array of tabs. Takes the position of the clicked tab, passes it to the changeTab mutation and sets currentTab variable to the index passed. Dynamically renders "active" class depending on currentTab position-->
       <li
         v-for="(tab, index) in tabs"
         v-bind:key="index"
@@ -11,8 +12,7 @@
       </li>
     </ul>
     <div class="tab-content">
-      <Tab v-show="currentTab === 0" type="Employer Maximum" selector="employerMax" />
-      <Tab v-show="currentTab === 1" type="Employee Minimum" selector="employerMax" />
+      <Tab />
     </div>
   </div>
 </template>
@@ -23,13 +23,10 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Tabs",
-  props: {
-    testProp: String
-  },
   components: {
     Tab
   },
-  computed: mapGetters(["stepOneCompleted", "tabs", "currentTab"]),
+  computed: mapGetters(["tabs", "currentTab"]),
   methods: {
     changeTab: function(index) {
       this.$store.commit("changeTab", index);

@@ -6,10 +6,9 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 
-const state = {
+export const state = {
     employerMax: null,
     employeeMin: null,
-    isActive: false,
     currentTab: 0,
     tabs: ['Employer', 'Employee'],
     stepOneCompleted: false,
@@ -33,7 +32,6 @@ export const mutations = {
     resetState(state) {
         state.employeeMin = null;
         state.employerMax = null;
-        state.isActive = null;
         state.currentTab = 0;
         state.stepOneCompleted = false;
         state.stepTwoCompleted = false;
@@ -61,17 +59,17 @@ export const getters = {
     }
 }
 
-export const store = new Vuex.Store({
+const store = new Vuex.Store({
     state,
     mutations,
     getters
 })
 
-const app = new Vue({
+new Vue({
     render: h => h(App),
     store
 }).$mount('#app')
 
 if (window.Cypress) {
-    window.app = app
+    window.__store__ = store
 }

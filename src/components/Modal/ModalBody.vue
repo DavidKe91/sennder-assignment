@@ -1,5 +1,5 @@
 <template>
-  <!-- Modal -->
+  <!-- The modal will only open when the checkForm function returns stepOne and stepTwo as true -->
   <div
     class="modal"
     :class="{opened: this.$store.state.stepOneCompleted && this.$store.state.stepTwoCompleted}"
@@ -9,18 +9,22 @@
         <Temperature />
       </div>
       <div class="modal-body">
-        <h1 v-if="this.employerMax > this.employeeMin">Success!</h1>
-        <h1 v-else-if="this.employerMax == this.employeeMin">Great Minds Think Alike!</h1>
-        <h1 v-else>Failure!</h1>
+        <!-- A basic comparison is made between both entered values and returns Success, Equal or Failure depending on the result -->
+        <h2 class="modal-title" v-if="this.employerMax > this.employeeMin">Success!</h2>
+        <h2
+          class="modal-title"
+          v-else-if="this.employerMax == this.employeeMin"
+        >Great Minds Think Alike!</h2>
+        <h2 class="modal-title" v-else>Failure!</h2>
         <p>Maximum offer was: &euro; {{this.employerMax}}</p>
         <p>Minimum expected salary was: &euro; {{this.employeeMin}}</p>
       </div>
+      <!-- Upon completing the form, the user has the option to revert back to the beginning using the resetState function, which returns all state properties to null or 0 -->
       <div class="modal-footer">
         <button v-on:click="resetState()">Reset</button>
       </div>
     </div>
   </div>
-  <!-- /Modal -->
 </template>
 
 <style scoped>
@@ -75,6 +79,8 @@
 .modal-header,
 .modal-footer {
   padding: 10px 20px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 .modal-header {
   border-bottom: #eeeeee solid 1px;
@@ -108,6 +114,11 @@
   margin: 16px 5px;
   position: relative;
   transition: color 0.1s ease;
+}
+@media only screen and (max-width: 767px) {
+  .modal-dialog {
+    width: 90%;
+  }
 }
 </style>
 

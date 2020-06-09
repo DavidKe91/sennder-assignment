@@ -1,5 +1,6 @@
 <template>
   <div class="weather">
+    <!-- The temperature variable is returned after an async api request to openweathermap.org. Temperature is then put through a filter to reduce the decimal places to one -->
     <img v-bind:src="this.iconUrl" />
     <p>London Temperature: {{temperature | decimalTemperature}}&deg;</p>
   </div>

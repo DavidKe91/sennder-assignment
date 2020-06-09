@@ -18,3 +18,19 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// export const visit = (skipWaiting) => {
+//     console.log('visit this =', this)
+
+//     if (typeof skipWaiting !== 'boolean') {
+//         skipWaiting = false
+//     }
+
+//     const waitForInitialLoad = !skipWaiting
+
+//     cy.visit('http://localhost:8080/')
+//     console.log('cy.visit /')
+//     if (waitForInitialLoad) {
+//         console.log('Loaded')
+//     }
+// }

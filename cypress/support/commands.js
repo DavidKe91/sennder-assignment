@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// Cypress.Commands.add('init', function () {
+//     cy.visit('/') // Load the app in order `cy.window` to work
+//     cy.window().then(window => { // .then() to make cypress wait until window is available
+//         cy.wrap(window.store).as('store') // alias the store (can be accessed like this.store)
+//         console.log(this.store)
+//     })
+// })

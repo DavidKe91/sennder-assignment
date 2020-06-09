@@ -1,13 +1,15 @@
 <template>
   <div>
+    <!-- Using the checkForm function, any errors detected will be pushed to the errors array and popped off when they have been resolved -->
     <div v-if="errors.length">
       <ul class="errors">
         <li v-bind:key="error" v-for="error in errors">{{error}}</li>
       </ul>
     </div>
-    <div>
-      <h2>{{this.type}}</h2>
-      <div v-if="currentTab == 0">
+    <!-- Dynamically shows the relevant title, tab and v-model depending on the current tab value. I wanted to pass relevant via props, but v-model can't be passed as a prop using Vuex -->
+    <div v-if="currentTab == 0">
+      <h2>Employer Maximum</h2>
+      <div>
         <span class="input-euro-symbol">
           <input
             id="employerMaxID"
@@ -16,9 +18,12 @@
             placeholder="Please Enter Maximum Salary"
           />
         </span>
-        <button v-on:click="checkForm(employerMax)">Submit</button>
+        <button class="employerSubmit" v-on:click="checkForm(employerMax)">Submit</button>
       </div>
-      <div v-else>
+    </div>
+    <div v-else>
+      <h2>Employee Maximum</h2>
+      <div>
         <span class="input-euro-symbol">
           <input
             id="employeeMinID"
@@ -27,7 +32,7 @@
             placeholder="Please Enter Minimum Salary"
           />
         </span>
-        <button v-on:click="checkForm(employeeMin)">Submit</button>
+        <button class="employeeSubmit" v-on:click="checkForm(employeeMin)">Submit</button>
       </div>
     </div>
   </div>
@@ -84,9 +89,6 @@ button {
 import { mapGetters } from "vuex";
 export default {
   name: "Tab",
-  props: {
-    type: String
-  },
   data: function() {
     return {
       errors: []
@@ -112,6 +114,7 @@ export default {
     }
   },
   methods: {
+    // checkNumbers pre-validates the form input before submission. This is done so that non numeric characters cannot pass into the parseInt function later on for comparing values
     checkNumbers: function(inputValue, mutation) {
       let matchNum = /^\d+$/.test(inputValue);
       if (!matchNum) {
@@ -122,6 +125,7 @@ export default {
         this.$store.commit(mutation, inputValue);
       }
     },
+    // checkForm is used when submit is clicked. It offers validation to protect against empty input fields being submitted.
     checkForm: function(inputValue) {
       if (!inputValue) {
         this.errors.push("Input required");
